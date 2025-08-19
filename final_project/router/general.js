@@ -16,21 +16,37 @@ public_users.get('/',function (req, res) {
     resolve(books)
   }).then(data => {
     return res.status(200).json(data)
-  }).then (err => {
+  }).catch (err => {
     return res.status(500).json(err)
   })
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
- });
+public_users.get('/isbn/:isbn', function (req, res) {
+    const isbn = req.params.isbn;
+    
+    new Promise((resolve, reject) => {
+      const book = books[isbn];
+      if (book) {
+        resolve(book);
+      } else {
+        reject("No book found with the given ISBN.");
+      }
+    })
+      .then(book => {
+        return res.status(200).json({
+          message: "Book details:",
+          book: book
+        });
+      })
+      .catch(error => {
+        return res.status(404).json({ message: error });
+      });
+  });  
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  
 });
 
 // Get all books based on title
