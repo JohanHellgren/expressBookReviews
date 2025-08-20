@@ -26,7 +26,7 @@ regd_users.post("/login", (req,res) => {
         const token = jwt.sign({username: username}, jwtSecret, {expiresIn: '1h'})
         req.session.authorization = {token, username}
 
-        return res.status(200).json({message: "Login successful", token: token})
+        return res.status(200).json({ message: "Login successful", token: token });
     } else {
         return res.status(401).json({message: "Invalid login info"})
     }

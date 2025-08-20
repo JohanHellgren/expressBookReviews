@@ -23,7 +23,7 @@ public_users.post("/register", (req,res) => {
 
     users.push({username, password})
 
-    return.res.status(400).json({message: "User has been added"})
+    return res.status(201).json({message: "User has been added"})
 });
 
 // Get the book list available in the shop
